@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/fastned/ocpi-schema/Location.json",
+  "$id": "https://raw.githubusercontent.com/Fastned/ocpi-schema/master/location.json",
   "type": "object",
   "description": "The Location object describes the location and its properties where a group of EVSEs that belong together are installed. Typically the Location object is the exact location of the group of EVSEs, but it can also be the entrance of a parking garage which contains these EVSEs. The exact way to reach each EVSE can be further specified by its own properties.",
   "definitions": {
@@ -631,11 +631,11 @@
       "$ref": "#/definitions/BusinessDetails",
       "description": "Information of the operator. When not specified, the information retrieved from the api_info endpoint should be used instead."
     },
-    "suboperator": { 
+    "suboperator": {
       "$ref": "#/definitions/BusinessDetails",
       "description": "Information of the suboperator if available."
     },
-    "owner": { 
+    "owner": {
       "$ref": "#/definitions/BusinessDetails",
       "description": "Information of the owner if available."
     },
