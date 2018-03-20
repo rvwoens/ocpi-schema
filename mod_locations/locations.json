@@ -1,0 +1,41 @@
+{
+  "$id": "file://./json-schema/locations.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "description": "The Locations array describes a list of locations and its properties where a group of EVSEs that belong together are installed. Typically the Location object is the exact location of the group of EVSEs, but it can also be the entrance of a parking garage which contains these EVSEs. The exact way to reach each EVSE can be further specified by its own properties.",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "definitions.json#/definitions/Location"
+      }
+    },
+    "status_code": {
+      "type": "integer",
+      "minLength": 4,
+      "description": "Response code, as listed in Status Codes, indicates how the request was handled. To avoid confusion with HTTP codes, at least four digits are used.",
+      "examples": [
+        1000
+      ]
+    },
+    "status_message": {
+      "type": "string",
+      "description": "An optional status message which may help when debugging.",
+      "examples": [
+        "Success"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time this message was generated.",
+      "examples": [
+        "2015-06-30T21:59:59Z"
+      ]
+    }
+  },
+  "required": [
+    "status_code", "timestamp"
+  ],
+  "additionalProperties": false
+}
