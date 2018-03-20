@@ -372,343 +372,381 @@
         "url", "category", "type"
       ],
       "additionalProperties": false
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Uniquely identifies the location within the CPOs platform (and suboperator platforms). This field can never be changed, modified or renamed.",
+          "maxLength": 39,
+          "examples": [
+            "LOC1"
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/LocationType"
+        },
+        "name": {
+          "type": "string",
+          "title": "The Name Schema ",
+          "description": "Display name of the location.",
+          "maxLength": 255,
+          "default": "",
+          "examples": [
+            "Gent Zuid"
+          ]
+        },
+        "address": {
+          "type": "string",
+          "title": "Location's Address",
+          "description": "Street/block name and house number if available.",
+          "maxLength":45,
+          "default": "",
+          "examples": [
+            "F.Rooseveltlaan 3A"
+          ]
+        },
+        "city": {
+          "type": "string",
+          "title": "Location's City",
+          "description": "City or Town of the location.",
+          "maxLength":45,
+          "default": "",
+          "examples": [
+            "Gent"
+          ]
+        },
+        "postal_code": {
+          "type": "string",
+          "title": "Location's Postal Code",
+          "description": "Postal code of the location.",
+          "maxLength":10,
+          "default": "",
+          "examples": [
+            "9000"
+          ]
+        },
+        "country": {
+          "type": "string",
+          "title": "Location's Country",
+          "description": "ISO 3166-1 alpha-3 code for the country of this location.",
+          "maxLength":3,
+          "default": "",
+          "examples": [
+            "BEL"
+          ]
+        },
+        "coordinates": { "$ref": "#/definitions/GeoLocation" },
+        "related_locations": {"$ref": "#/definitions/GeoLocation" },
+        "evses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string",
+                "title": "EVSE Uid",
+                "description": "Uniquely identifies the EVSE within the CPOs platform (and suboperator platforms). For example a database unique ID or the 'EVSE ID'. This field can never be changed, modified or renamed. This is the 'technical' identification of the EVSE, not to be used as 'human readable' identification, use the field: evse_id for that.",
+                "maxLength": 39,
+                "default": "",
+                "examples": [
+                  "3256"
+                ]
+              },
+              "evse_id": {
+                "type": "string",
+                "title": "EVSE ID",
+                "description": "Compliant with the following specification for EVSE ID from eMI3 standard version V1.0.",
+                "maxLength":48,
+                "default": "",
+                "examples": [
+                  "BE-BEC-E041503001"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "title": "EVSE Status",
+                "description": "Indicates the current status of the EVSE.",
+                "enum": [ "AVAILABLE", "BLOCKED", "CHARGING", "INOPERATIVE", "OUTOFORDER", "PLANNED", "REMOVED", "RESERVED", "UNKNOWN" ],
+                "default": "",
+                "examples": [
+                  "AVAILABLE"
+                ]
+              },
+              "status_schedule": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/StatusSchedule"
+                }
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "title": "EVSE Capabilities ",
+                  "description": "List of functionalities that the EVSE is capable of.",
+                  "enum": [ "CHARGING_PROFILE_CAPABLE","CREDIT_CARD_PAYABLE","REMOTE_START_STOP_CAPABLE","RESERVABLE","RFID_READER","UNLOCK_CAPABLE"],
+                  "default": "",
+                  "examples": [
+                    "RESERVABLE"
+                  ]
+                }
+              },
+              "connectors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "title": "Connector Id",
+                      "description": "Identifier of the connector within the EVSE. Two connectors may have the same id as long as they do not belong to the same EVSE object.",
+                      "maxLength": 36,
+                      "default": "",
+                      "examples": [
+                        "1"
+                      ]
+                    },
+                    "standard": {
+                      "type": "string",
+                      "title": "Connector Standard",
+                      "description": "The standard of the installed connector.",
+                      "enum": [ "CHADEMO","DOMESTIC_A","DOMESTIC_B","DOMESTIC_C","DOMESTIC_D","DOMESTIC_E","DOMESTIC_F","DOMESTIC_G","DOMESTIC_H","DOMESTIC_I","DOMESTIC_J","DOMESTIC_K","DOMESTIC_L","IEC_60309_2_single_16","IEC_60309_2_three_16","IEC_60309_2_three_32","IEC_60309_2_three_64","IEC_62196_T1","IEC_62196_T1_COMBO","IEC_62196_T2","IEC_62196_T2_COMBO","IEC_62196_T3A","IEC_62196_T3C","TESLA_R","TESLA_S"],
+                      "default": "",
+                      "examples": [
+                        "IEC_62196_T2"
+                      ]
+                    },
+                    "format": {
+                      "type": "string",
+                      "title": "Connector Format",
+                      "description": "The format (socket/cable) of the installed connector.",
+                      "enum": [ "CABLE", "SOCKET"],
+                      "default": "",
+                      "examples": [
+                        "CABLE"
+                      ]
+                    },
+                    "power_type": {
+                      "type": "string",
+                      "title": "Connector Power Type",
+                      "description": "Power Type (AC/DC) of the Connector.",
+                      "enum": [ "DC", "AC_3_PHASE", "AC_1_PHASE" ],
+                      "default": "",
+                      "examples": [
+                        "AC_3_PHASE"
+                      ]
+                    },
+                    "voltage": {
+                      "type": "integer",
+                      "title": "Connector Voltage",
+                      "description": "Voltage of the connector (line to neutral for AC_3_PHASE), in volt [V].",
+                      "default": 0,
+                      "examples": [
+                        220
+                      ]
+                    },
+                    "amperage": {
+                      "type": "integer",
+                      "title": "Connector Amperage",
+                      "description": "maximum amperage of the connector, in ampere [A].",
+                      "default": 0,
+                      "examples": [
+                        16
+                      ]
+                    },
+                    "tariff_id": {
+                      "type": "string",
+                      "title": "The Tariff_id Schema ",
+                      "description": "Identifier of the current charging tariff structure. For a 'Free of Charge' tariff this field should be set, and point to a defined 'Free of Charge' tariff.",
+                      "maxLength": 36,
+                      "default": "",
+                      "examples": [
+                        "11"
+                      ]
+                    },
+                    "terms_and_conditions": {
+                      "type": "string",
+                      "title": "Connector's Terms and Conditions",
+                      "description": "URL to the operator's terms and conditions.",
+                      "maxLength": 255,
+                      "default": "",
+                      "examples": [
+                        "https://fastned.nl/terms.pdf"
+                      ]
+                    },
+                    "last_updated": {
+                      "type": "string",
+                      "title": "Connector's Last Updated",
+                      "description": "Datetime with tz when this Connectors was last updated (or created).",
+                      "default": "",
+                      "format": "date-time",
+                      "examples": [
+                        "2015-03-16T10:10:02Z"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id", "standard", "format", "power_type", "voltage", "amperage", "last_updated"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "physical_reference": {
+                "type": "string",
+                "title": "Charger's Physical Reference",
+                "description": "A number/string printed on the outside of the EVSE for visual identification.",
+                "maxLength": 16,
+                "default": "",
+                "examples": [
+                  "1"
+                ]
+              },
+              "floor_level": {
+                "type": "string",
+                "title": "The Floor_level Schema ",
+                "description": "Level on which the charging station is located (in garage buildings) in the locally displayed numbering scheme.",
+                "maxLength":4,
+                "default": "",
+                "examples": [
+                  "-1"
+                ]
+              },
+              "coordinates": { "$ref": "#/definitions/GeoLocation" },
+              "directions": {
+                "$ref": "#/definitions/DisplayText",
+                "description": "Multi-language human-readable directions when more detailed information on how to reach the EVSE from the Location is required."
+              },
+              "parking_restrictions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "title": "EVSE Parking Restrictions ",
+                  "description": "The restrictions that apply to the parking spot.",
+                  "enum": [
+                    "EV_ONLY", "PLUGGED", "DISABLED", "CUSTOMERS", "MOTORCYCLES"
+                  ],
+                  "default": "",
+                  "examples": [ "EV_ONLY" ]
+                }
+              },
+              "images": {"type": "array",
+                "items": {"$ref": "#/definitions/Image"}
+              },
+              "last_updated": {
+                "type": "string",
+                "title": "The Last_updated Schema ",
+                "description": "Datetime with tz when this EVSE or one of its Connectors was last updated (or created)",
+                "default": "",
+                "format": "date-time",
+                "examples": [
+                  "2015-06-28T08:12:01Z"
+                ]
+              }
+            }
+          }
+        },
+        "directions": {
+          "$ref": "#/definitions/DisplayText",
+          "description": "Human-readable directions on how to reach the location."
+        },
+        "operator": {
+          "$ref": "#/definitions/BusinessDetails",
+          "description": "Information of the operator. When not specified, the information retrieved from the api_info endpoint should be used instead."
+        },
+        "suboperator": { 
+          "$ref": "#/definitions/BusinessDetails",
+          "description": "Information of the suboperator if available."
+        },
+        "owner": { 
+          "$ref": "#/definitions/BusinessDetails",
+          "description": "Information of the owner if available."
+        },
+        "facilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "title": "Location Facilities",
+            "description": "Optional list of facilities this charge location directly belongs to.",
+            "enum": ["HOTEL", "RESTAURANT", "CAFE", "MALL", "SUPERMARKET", "SPORT", "RECREATION_AREA", "NATURE", "MUSEUM", "BUS_STOP", "TAXI_STAND", "TRAIN_STATION", "AIRPORT", "CARPOOL_PARKING", "FUEL", "WIFI"],
+            "default": "",
+            "examples": [ "RESTAURANT" ]
+          }
+        },
+        "time_zone": {
+          "type": "string",
+          "title": "Location's time zone",
+          "description": "One of IANA tzdata's TZ-values representing the time zone of the location. (http://www.iana.org/time-zones)",
+          "maxLength": 255,
+          "default": "",
+          "examples": [
+            "Europe/Oslo"
+          ]},
+        "opening_times": {
+          "$ref": "#/definitions/Hours"
+        },
+        "charging_when_closed": {
+          "type":"boolean",
+          "title": "Charging when closed",
+          "description": "Indicates if the EVSEs are still charging outside the opening hours of the location. E.g. when the parking garage closes its barriers over night, is it allowed to charge till the next morning?",
+          "default": "true"
+        },
+        "images": {"type": "array",
+          "items": {"$ref": "#/definitions/Image"}
+        },
+        "energy_mix": {
+          "$ref": "#/definitions/EnergyMix"
+        },
+        "last_updated": {
+          "type": "string",
+          "title": "The Last_updated Schema ",
+          "format": "date-time",
+          "description": "Datetime with tz when this Location or one of its EVSEs or Connectors were last updated (or created).",
+          "default": "",
+          "examples": [
+            "2015-06-29T20:39:09Z"
+          ]
+        }
+      },
+      "required": ["id", "type", "address", "city", "postal_code", "country", "coordinates", "last_updated"],
+      "additionalProperties": false
     }
   },
   "$schema": "http://json-schema.org/draft-06/schema#",
   "properties": {
-    "id": {
-      "type": "string",
-      "description": "Uniquely identifies the location within the CPOs platform (and suboperator platforms). This field can never be changed, modified or renamed.",
-      "maxLength": 39,
-      "examples": [
-        "LOC1"
-      ]
-    },
-    "type": {
-      "$ref": "#/definitions/LocationType"
-    },
-    "name": {
-      "type": "string",
-      "title": "The Name Schema ",
-      "description": "Display name of the location.",
-      "maxLength": 255,
-      "default": "",
-      "examples": [
-        "Gent Zuid"
-      ]
-    },
-    "address": {
-      "type": "string",
-      "title": "Location's Address",
-      "description": "Street/block name and house number if available.",
-      "maxLength":45,
-      "default": "",
-      "examples": [
-        "F.Rooseveltlaan 3A"
-      ]
-    },
-    "city": {
-      "type": "string",
-      "title": "Location's City",
-      "description": "City or Town of the location.",
-      "maxLength":45,
-      "default": "",
-      "examples": [
-        "Gent"
-      ]
-    },
-    "postal_code": {
-      "type": "string",
-      "title": "Location's Postal Code",
-      "description": "Postal code of the location.",
-      "maxLength":10,
-      "default": "",
-      "examples": [
-        "9000"
-      ]
-    },
-    "country": {
-      "type": "string",
-      "title": "Location's Country",
-      "description": "ISO 3166-1 alpha-3 code for the country of this location.",
-      "maxLength":3,
-      "default": "",
-      "examples": [
-        "BEL"
-      ]
-    },
-    "coordinates": { "$ref": "#/definitions/GeoLocation" },
-    "related_locations": {"$ref": "#/definitions/GeoLocation" },
-    "evses": {
+    "data": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "uid": {
-            "type": "string",
-            "title": "EVSE Uid",
-            "description": "Uniquely identifies the EVSE within the CPOs platform (and suboperator platforms). For example a database unique ID or the 'EVSE ID'. This field can never be changed, modified or renamed. This is the 'technical' identification of the EVSE, not to be used as 'human readable' identification, use the field: evse_id for that.",
-            "maxLength": 39,
-            "default": "",
-            "examples": [
-              "3256"
-            ]
-          },
-          "evse_id": {
-            "type": "string",
-            "title": "EVSE ID",
-            "description": "Compliant with the following specification for EVSE ID from eMI3 standard version V1.0.",
-            "maxLength":48,
-            "default": "",
-            "examples": [
-              "BE-BEC-E041503001"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "title": "EVSE Status",
-            "description": "Indicates the current status of the EVSE.",
-            "enum": [ "AVAILABLE", "BLOCKED", "CHARGING", "INOPERATIVE", "OUTOFORDER", "PLANNED", "REMOVED", "RESERVED", "UNKNOWN" ],
-            "default": "",
-            "examples": [
-              "AVAILABLE"
-            ]
-          },
-          "status_schedule": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/StatusSchedule"
-            }
-          },
-          "capabilities": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "title": "EVSE Capabilities ",
-              "description": "List of functionalities that the EVSE is capable of.",
-              "enum": [ "CHARGING_PROFILE_CAPABLE","CREDIT_CARD_PAYABLE","REMOTE_START_STOP_CAPABLE","RESERVABLE","RFID_READER","UNLOCK_CAPABLE"],
-              "default": "",
-              "examples": [
-                "RESERVABLE"
-              ]
-            }
-          },
-          "connectors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "title": "Connector Id",
-                  "description": "Identifier of the connector within the EVSE. Two connectors may have the same id as long as they do not belong to the same EVSE object.",
-                  "maxLength": 36,
-                  "default": "",
-                  "examples": [
-                    "1"
-                  ]
-                },
-                "standard": {
-                  "type": "string",
-                  "title": "Connector Standard",
-                  "description": "The standard of the installed connector.",
-                  "enum": [ "CHADEMO","DOMESTIC_A","DOMESTIC_B","DOMESTIC_C","DOMESTIC_D","DOMESTIC_E","DOMESTIC_F","DOMESTIC_G","DOMESTIC_H","DOMESTIC_I","DOMESTIC_J","DOMESTIC_K","DOMESTIC_L","IEC_60309_2_single_16","IEC_60309_2_three_16","IEC_60309_2_three_32","IEC_60309_2_three_64","IEC_62196_T1","IEC_62196_T1_COMBO","IEC_62196_T2","IEC_62196_T2_COMBO","IEC_62196_T3A","IEC_62196_T3C","TESLA_R","TESLA_S"],
-                  "default": "",
-                  "examples": [
-                    "IEC_62196_T2"
-                  ]
-                },
-                "format": {
-                  "type": "string",
-                  "title": "Connector Format",
-                  "description": "The format (socket/cable) of the installed connector.",
-                  "enum": [ "CABLE", "SOCKET"],
-                  "default": "",
-                  "examples": [
-                    "CABLE"
-                  ]
-                },
-                "power_type": {
-                  "type": "string",
-                  "title": "Connector Power Type",
-                  "description": "Power Type (AC/DC) of the Connector.",
-                  "enum": [ "DC", "AC_3_PHASE", "AC_1_PHASE" ],
-                  "default": "",
-                  "examples": [
-                    "AC_3_PHASE"
-                  ]
-                },
-                "voltage": {
-                  "type": "integer",
-                  "title": "Connector Voltage",
-                  "description": "Voltage of the connector (line to neutral for AC_3_PHASE), in volt [V].",
-                  "default": 0,
-                  "examples": [
-                    220
-                  ]
-                },
-                "amperage": {
-                  "type": "integer",
-                  "title": "Connector Amperage",
-                  "description": "maximum amperage of the connector, in ampere [A].",
-                  "default": 0,
-                  "examples": [
-                    16
-                  ]
-                },
-                "tariff_id": {
-                  "type": "string",
-                  "title": "The Tariff_id Schema ",
-                  "description": "Identifier of the current charging tariff structure. For a 'Free of Charge' tariff this field should be set, and point to a defined 'Free of Charge' tariff.",
-                  "maxLength": 36,
-                  "default": "",
-                  "examples": [
-                    "11"
-                  ]
-                },
-                "terms_and_conditions": {
-                  "type": "string",
-                  "title": "Connector's Terms and Conditions",
-                  "description": "URL to the operator's terms and conditions.",
-                  "maxLength": 255,
-                  "default": "",
-                  "examples": [
-                    "https://fastned.nl/terms.pdf"
-                  ]
-                },
-                "last_updated": {
-                  "type": "string",
-                  "title": "Connector's Last Updated",
-                  "description": "Datetime with tz when this Connectors was last updated (or created).",
-                  "default": "",
-                  "format": "date-time",
-                  "examples": [
-                    "2015-03-16T10:10:02Z"
-                  ]
-                }
-              },
-              "required": [
-                "id", "standard", "format", "power_type", "voltage", "amperage", "last_updated"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "physical_reference": {
-            "type": "string",
-            "title": "Charger's Physical Reference",
-            "description": "A number/string printed on the outside of the EVSE for visual identification.",
-            "maxLength": 16,
-            "default": "",
-            "examples": [
-              "1"
-            ]
-          },
-          "floor_level": {
-            "type": "string",
-            "title": "The Floor_level Schema ",
-            "description": "Level on which the charging station is located (in garage buildings) in the locally displayed numbering scheme.",
-            "maxLength":4,
-            "default": "",
-            "examples": [
-              "-1"
-            ]
-          },
-          "coordinates": { "$ref": "#/definitions/GeoLocation" },
-          "directions": {
-            "$ref": "#/definitions/DisplayText",
-            "description": "Multi-language human-readable directions when more detailed information on how to reach the EVSE from the Location is required."
-          },
-          "parking_restrictions": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "title": "EVSE Parking Restrictions ",
-              "description": "The restrictions that apply to the parking spot.",
-              "enum": [
-                "EV_ONLY", "PLUGGED", "DISABLED", "CUSTOMERS", "MOTORCYCLES"
-              ],
-              "default": "",
-              "examples": [ "EV_ONLY" ]
-            }
-          },
-          "images": {"type": "array",
-            "items": {"$ref": "#/definitions/Image"}
-          },
-          "last_updated": {
-            "type": "string",
-            "title": "The Last_updated Schema ",
-            "description": "Datetime with tz when this EVSE or one of its Connectors was last updated (or created)",
-            "default": "",
-            "format": "date-time",
-            "examples": [
-              "2015-06-28T08:12:01Z"
-            ]
-          }
-        }
+        "$ref": "#/definitions/Location"
       }
     },
-    "directions": {
-      "$ref": "#/definitions/DisplayText",
-      "description": "Human-readable directions on how to reach the location."
-    },
-    "operator": {
-      "$ref": "#/definitions/BusinessDetails",
-      "description": "Information of the operator. When not specified, the information retrieved from the api_info endpoint should be used instead."
-    },
-    "suboperator": { 
-      "$ref": "#/definitions/BusinessDetails",
-      "description": "Information of the suboperator if available."
-    },
-    "owner": { 
-      "$ref": "#/definitions/BusinessDetails",
-      "description": "Information of the owner if available."
-    },
-    "facilities": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "title": "Location Facilities",
-        "description": "Optional list of facilities this charge location directly belongs to.",
-        "enum": ["HOTEL", "RESTAURANT", "CAFE", "MALL", "SUPERMARKET", "SPORT", "RECREATION_AREA", "NATURE", "MUSEUM", "BUS_STOP", "TAXI_STAND", "TRAIN_STATION", "AIRPORT", "CARPOOL_PARKING", "FUEL", "WIFI"],
-        "default": "",
-        "examples": [ "RESTAURANT" ]
-      }
-    },
-    "time_zone": {
-      "type": "string",
-      "title": "Location's time zone",
-      "description": "One of IANA tzdata's TZ-values representing the time zone of the location. (http://www.iana.org/time-zones)",
-      "maxLength": 255,
-      "default": "",
+    "status_code": {
+      "type": "integer",
+      "minLength": 4,
+      "description": "Response code, as listed in Status Codes, indicates how the request was handled. To avoid confusion with HTTP codes, at least four digits are used.",
       "examples": [
-        "Europe/Oslo"
-      ]},
-    "opening_times": {
-      "$ref": "#/definitions/Hours"
+        1000
+      ]
     },
-    "charging_when_closed": {
-      "type":"boolean",
-      "title": "Charging when closed",
-      "description": "Indicates if the EVSEs are still charging outside the opening hours of the location. E.g. when the parking garage closes its barriers over night, is it allowed to charge till the next morning?",
-      "default": "true"
-    },
-    "images": {"type": "array",
-      "items": {"$ref": "#/definitions/Image"}
-    },
-    "energy_mix": {
-      "$ref": "#/definitions/EnergyMix"
-    },
-    "last_updated": {
+    "status_message": {
       "type": "string",
-      "title": "The Last_updated Schema ",
+      "description": "An optional status message which may help when debugging.",
+      "examples": [
+        "Success"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
       "format": "date-time",
-      "description": "Datetime with tz when this Location or one of its EVSEs or Connectors were last updated (or created).",
-      "default": "",
+      "description": "The time this message was generated.",
       "examples": [
-        "2015-06-29T20:39:09Z"
+        "2015-06-30T21:59:59Z"
       ]
     }
   },
-  "required": ["id", "type", "address", "city", "postal_code", "country", "coordinates", "last_updated"],
+  "required": [
+    "status_code", "timestamp"
+  ],
   "additionalProperties": false
 }
