@@ -1,0 +1,94 @@
+{
+  "$id": "file://./json-schema/tokens/definitions.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "The Tokens definitions file describes a list of re-usable properties that are used in the locations, EVSE and connector classes.",
+  "definitions": {
+    "Token": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "title": "Token Uid",
+          "description": "Identification used by CPO system to identify this token. Currently, in most cases, this is the RFID hidden ID as read by the RFID reader.",
+          "maxLength": 36,
+          "default": "",
+          "examples": [
+            "FF00AABB99"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the token.",
+          "enum": [ "OTHER", "RFID" ],
+          "examples": [
+            "RFID"
+          ]
+        },
+        "auth_id": {
+          "type": "string",
+          "title": "Token EV Contract ID",
+          "description": "Uniquely identifies the EV Driver contract token within the eMSP's platform (and suboperator platforms). Recommended to follow the specification for eMA ID from 'eMI3 standard version V1.0'",
+          "maxLength":36,
+          "default": "",
+          "examples": [
+            "BE-BEC-C041503001"
+          ]
+        },
+        "visual_number": {
+          "type": "string",
+          "title": "Token EV Contract ID",
+          "description": "Visual readable number/identification as printed on the Token (RFID card), might be equal to the auth_id. Recommended to follow the specification for eMA ID from 'eMI3 standard version V1.0'",
+          "maxLength":64,
+          "default": "",
+          "examples": [
+            "BE-BEC-C041503001"
+          ]
+        },
+        "issuer": {
+          "type": "string",
+          "title": "Token Issuer",
+          "description": "Issuing company, most of the times the name of the company printed on the token (RFID card), not necessarily the eMSP.",
+          "maxLength": 64,
+          "default": "",
+          "examples": [
+            "TheNewMotion"
+          ]
+        },
+        "valid": {
+          "type":"boolean",
+          "title": "Token Valid",
+          "description": "Is this Token valid",
+          "default": "true"
+        },
+        "whitelist": {
+          "type": "string",
+          "description": "Indicates what type of white-listing is allowed.",
+          "enum": [ "ALWAYS", "ALLOWED", "ALLOWED_OFFLINE", "NEVER" ],
+          "examples": [
+            "ALWAYS"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "description": "Language Code ISO 639-1",
+          "maxLength":2,
+          "examples": [
+            "en"
+          ]
+        },
+        "last_updated": {
+          "type": "string",
+          "title": "The Last_updated Schema ",
+          "description": "Datetime with tz when this EVSE or one of its Connectors was last updated (or created)",
+          "default": "",
+          "format": "date-time",
+          "examples": [
+            "2015-06-28T08:12:01Z"
+          ]
+        }
+      },
+      "required": ["uid", "type", "auth_id", "issuer", "valid", "whitelist", "last_updated"],
+      "additionalProperties": false
+    }
+  }
+}
