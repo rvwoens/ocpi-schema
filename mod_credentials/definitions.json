@@ -1,75 +1,86 @@
 {
-  "$id": "file://./json-schema/definitions.json",
+  "$id": "file://./json-schema/mod_credentials/definitions.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "description": "The Credentials definitions file describes a list of re-usable properties that are used in the credentials classes.",
   "definitions": {
-    "URL": {
+    "Credentials": {
       "type": "object",
       "properties": {
         "url": {
           "type": "string",
           "description": "The URL to your API versions endpoint.",
-          "maxLength":255,
+          "maxLength": 255,
           "examples": [
-            "https://example.com/ocpi/cpo/"
+            "https://api.fastned.com/ocpi/cpo/"
+          ]
+        },
+        "token": {
+          "type": "string",
+          "title": "URL to API versions endpoints",
+          "description": "The token for the other party to authenticate in your system.",
+          "maxLength": 255,
+          "default": "",
+          "examples": [
+            "ebf3b399-779f-4497-9b9d-ac6ad3cc44d2"
+          ]
+        },
+        "business_details": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the operator",
+              "examples": [
+                "Fastned"
+              ]
+            },
+            "website": {
+              "type": "string",
+              "description": "Link to the operator's website",
+              "maxLength": 255,
+              "examples": [
+                "https://fastned.nl"
+              ]
+            },
+            "logo": {
+              "$ref": "/json-schema/definitions.json#/definitions/Image"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "party_id": {
+          "type": "string",
+          "description": "CPO or eMSP ID of this party. (following the 15118 ISO standard).",
+          "maxLength": 3,
+          "default": "",
+          "examples": [
+            "FAS"
+          ]
+        },
+        "country_code": {
+          "type": "string",
+          "description": "Country code of the country this party is operating in.",
+          "maxLength": 2,
+          "default": "",
+          "examples": [
+            "NL",
+            "BE",
+            "DE",
+            "FR"
           ]
         }
       },
-      "required": ["url"],
+      "required": [
+        "country_code",
+        "party_id",
+        "token",
+        "url",
+        "business_details"
+      ],
       "additionalProperties": false
-    },
-    "Token": {
-      "type": "string",
-      "title": "URL to API versions endpoints",
-      "description": "The token for the other party to authenticate in your system.",
-      "maxLength":255,
-      "default": "",
-          "examples": [
-            "https://example.com/ocpi/cpo/"
-          ]
-    },
-    "BusinessDetails": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the operator",
-          "examples": [
-            "Fastned"
-          ]
-        },
-        "website": {
-          "type": "string",
-          "description": "Link to the operator's website",
-          "maxLength":255,
-          "examples": [
-            "https://fastned.nl"
-          ]
-        },
-        "logo": {
-          "$ref": "#/definitions/Image"
-        }
-      },
-      "required": ["name"],
-      "additionalProperties": false
-    },
-    "party_id": {
-      "type": "string",
-      "description": "CPO or eMSP ID of this party. (following the 15118 ISO standard).",
-      "maxLength":3,
-      "default": "",
-          "examples": [
-            "EXA"
-          ]
-    },
-    "country_code": {
-      "type": "string",
-      "description": "Country code of the country this party is operating in.",
-      "maxLength":2,
-      "default": "",
-          "examples": [
-            "NL", "BE", "DE", "FR"
-          ]
     }
   }
 }
