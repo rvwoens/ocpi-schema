@@ -43,7 +43,7 @@
               ]
             },
             "logo": {
-              "$ref": "/json-schema/definitions.json#/definitions/Image"
+              "$ref": "/json-schema/mod_locations/definitions.json#/definitions/Image"
             }
           },
           "required": [
